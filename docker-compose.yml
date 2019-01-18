@@ -1,0 +1,51 @@
+version: '3.5'
+
+services:
+
+  nginx:
+    image: glrd/nginx
+    build:
+      context: ./
+      dockerfile: nginx.dockerfile
+    container_name: nginx-proxy
+    ports:
+       - "8082:80"
+    volumes:
+       - /var/run/docker.sock:/tmp/docker.sock
+       - ./nginx/config:/etc/nginx/conf.d/
+       - ./nginx/logs:/var/logs
+    links:
+       - php
+  php:
+    image: glrd/laravel
+    build:
+      context: ./
+      dockerfile: php.dockerfile
+#    volumes:
+#      - ./src/lara-test:/var/www/html
+    container_name: nginx-php
+    command: php-fpm --allow-to-run-as-root
+    privileged: true
+    links:
+      - 'mysql:mysql'
+    networks:
+    - mysqlnet
+
+  mysql:
+    image: mysql:5.7
+    hostname: laravel_mysql
+    container_name: laravel_mysql
+    volumes:
+      - ./data:/var/lib/mysql
+    ports:
+      - "3309:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=laravel_db
+    networks:
+      - mysqlnet
+
+networks:
+  mysqlnet:
+    name: mysqlnet
+    driver: bridge
