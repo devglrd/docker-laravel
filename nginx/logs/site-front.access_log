@@ -1,0 +1,4 @@
+85.68.105.164 - - [31/Jan/2019:21:40:25 +0000] "GET / HTTP/1.1" 200 22 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36"
+85.68.105.164 - - [31/Jan/2019:21:40:25 +0000] "GET /robots.txt HTTP/1.1" 404 571 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36"
+85.68.105.164 - - [31/Jan/2019:21:40:25 +0000] "GET /favicon.ico HTTP/1.1" 404 571 "http://92.222.90.200:81/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36"
+195.231.10.7 - - [31/Jan/2019:22:01:04 +0000] "GET login.cgi HTTP/1.1" 400 173 "-" "-"

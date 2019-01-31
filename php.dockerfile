@@ -14,12 +14,12 @@ RUN docker-php-ext-install pdo mbstring pdo_mysql gd bcmath
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-ADD ./src/lara-test /var/www/html
+ADD ./src/php /var/www/php
 
 
-RUN cp .env.example .env
-RUN php artisan key:generate
-RUN composer install
-RUN chown -R :www-data /var/www/html
-RUN chmod -R 777 /var/www/html/storage
+#RUN cp .env.example .env
+#RUN php artisan key:generate
+#RUN composer install
+#RUN chown -R :www-data /var/www/html
+#RUN chmod -R 777 /var/www/html/storage
 

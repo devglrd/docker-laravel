@@ -9,13 +9,17 @@ services:
       dockerfile: nginx.dockerfile
     container_name: nginx-proxy
     ports:
-       - "8082:80"
+      - "80:80"
+      - "81:81"
     volumes:
-       - /var/run/docker.sock:/tmp/docker.sock
-       - ./nginx/config:/etc/nginx/conf.d/
-       - ./nginx/logs:/var/logs
+      - /var/run/docker.sock:/tmp/docker.sock
+      - ./nginx/config:/etc/nginx/conf.d/
+      - ./nginx/logs:/var/logs
     links:
-       - php
+      - php:php
+    networks:
+      - devnet
+
   php:
     image: glrd/laravel
     build:
@@ -27,25 +31,29 @@ services:
     command: php-fpm --allow-to-run-as-root
     privileged: true
     links:
-      - 'mysql:mysql'
+      - mysql
     networks:
-    - mysqlnet
+      - mysqlnet
+      - devnet
 
   mysql:
     image: mysql:5.7
-    hostname: laravel_mysql
-    container_name: laravel_mysql
-    volumes:
-      - ./data:/var/lib/mysql
+    hostname: mysql
+    container_name: mysql
+ #   volumes:
+ #     - ./data:/var/lib/mysql
     ports:
-      - "3309:3306"
+      - "3306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=laravel_db
+      - MYSQL_DATABASE=init_db
     networks:
       - mysqlnet
 
 networks:
+  devnet:
+    name: devnet
+    driver: bridge
   mysqlnet:
     name: mysqlnet
     driver: bridge
